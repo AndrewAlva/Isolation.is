@@ -1,13 +1,8 @@
-/*Normalize*/
-// @import url("https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css");
+// Canvas style to prevent canvas overflow when filling entire screen. This is needed because of normalize.css library that codepen uses.
+canvas{display: block;}
 
-// Import libraries
+// Prevent unwanted margins
+*{margin: 0;padding: 0;}
 
-
-// Import your files
-@import 'global/vars';
-@import 'global/mixins';
-@import 'global/default';
-@import 'global/grid';
-
-@import 'views/_index'
+// Test to check canvas fill screen
+body{background-color: #f60;}
