@@ -6,23 +6,30 @@ html(class='no-js')
 		meta(name='viewport', content='shrink-to-fit=no, initial-scale=1.0, minimum-scale=1, width=device-width, height=device-height')
 
 		block title
-			title Apart, yet closer. | Isolation.is
+			title Apart, yet closer | Postcards from Isolation
 
 		//- metatags
 		block google_metatags
-			meta(name='description', content='Page_description')
-			meta(name='subject', content='Page_subject')
+			meta(name='description', content="Before isolation, many of us just ran into each other without caring about it too much; now we started to identify who we care for and we're trying to get closer, even if we keep a physical distance.")
 
 		//- Share graphs for social media
 		block og_metatags
-			meta(property="og:url" 			content="PLACE_YOUR_URL")
-			meta(property="og:title" 		content="PLACE_YOUR_TITLE")
-			meta(property="og:description" 	content="PLACE_YOUR_DESCRIPTION")
-			meta(property="og:image" 		content="PLACE_YOUR_IMAGE_URL")
+			meta(property="og:url" 			content="https://isolation.andrew.studio/")
+			meta(property="og:title" 		content="Apart, yet closer 🏝️ Postcards from Isolation")
+			meta(property="og:description" 	content="Before isolation, many of us just ran into each other without caring about it too much; now we started to identify who we care for and we're trying to get closer, even if we keep a physical distance.")
+			meta(property="og:image" 		content="https://isolation.andrew.studio/share.jpg")
 
 		//- Share graphs that doesn't change
 		meta(property="og:type" 		content="website")
 		meta(name="twitter:card", content="summary")
+
+		link(rel="apple-touch-icon" sizes="120x120" href="/apple-touch-icon.png")
+		link(rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png")
+		link(rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png")
+		link(rel="manifest" href="/site.webmanifest")
+		link(rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5")
+		meta(name="msapplication-TileColor" content="#ffffff")
+		meta(name="theme-color" content="#ffffff")
 
 		//- stylesheets
 		link(rel='stylesheet', href='css/app.css')
@@ -31,7 +38,6 @@ html(class='no-js')
 
 
 	body
-		.circle
 
 		//- scripts
 		script(type="text/javascript" src='js/app.js')
