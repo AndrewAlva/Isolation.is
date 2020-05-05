@@ -16,6 +16,7 @@ var lovedPeople = [];
 var randomPeople = [];
 var crowd = 50; // Amount of random people
 var user, socialDistancing, minDistance, pullRange, peopleRadius, peopleSize, mobileFlag;
+var yStartOffsetPercentage = 2.14;
 
 
 
@@ -25,23 +26,16 @@ var user, socialDistancing, minDistance, pullRange, peopleRadius, peopleSize, mo
 /////////////////////////////////////////////////////////////////
 function setSocialRules() {
 	if (maxWidth > 768) { 
-		peopleRadius = 20;
-		socialDistancing = 400;
-		minDistance = 70;
-		pullRange = 140;
-		
 		mobileFlag = false;
-		
 	} else {
-		peopleRadius = 10;
-		socialDistancing = 336;
-		minDistance = 40;
-		pullRange = 118;
-		
 		mobileFlag = true;
 	}
 	
+	peopleRadius = maxWidth * 0.0156;
 	peopleSize = peopleRadius * 2;
+	socialDistancing = maxWidth * 0.312;
+	minDistance = maxWidth * 0.0546;
+	pullRange = maxWidth * 0.1092;
 }
 
 
@@ -56,6 +50,7 @@ function setupCanvasSize() {
 	canvas.height = maxHeight;
 }
 
+
 function updateMouse(e) {
 	if (e.touches) e = e.touches[0];
 	mouse = {
@@ -64,23 +59,72 @@ function updateMouse(e) {
 	}
 }
 
+
 function onResizeWindow() {
 	setupCanvasSize();
 	
 	setSocialRules();
+
+	rebootCharacters();
 }
 
+
+function rebootCharacters(){
+	lovedPeople = [];
+	setupLovedPeople();
+
+	randomPeople = [];
+	setupRandomPeople();
+	
+}
+
+
+// Grid 'AFTER'
+function setupLovedPeople(){
+	for(var i = peopleSize; i < maxWidth; i+= socialDistancing) {
+		var _counter = 0;
+
+		for(var j = peopleSize * yStartOffsetPercentage; j < maxHeight; j+= socialDistancing * 0.5) {
+			var _odd = _counter % 2;
+			var _x;
+			var _y = j;
+
+			(_odd == 0) ? _x = i : _x = i + (socialDistancing / 2);
+
+			var _chance = Math.random()*10;
+			if (_chance) {
+				var _person = new Particle({
+					xStop: _x,
+					yStop: _y
+				});
+				lovedPeople.push(_person);
+			}
+
+			_counter++;
+		}
+	}
+}
+
+// Passing by 'BEFORE'
+function setupRandomPeople(){
+	for(var i = 0; i < crowd; i++) {
+		var _person = new Noise();
+		randomPeople.push(_person)
+	}
+}
+
+
 // Performance optimization
-function throttle(fn, delay) {
-    let lastCall = 0;
-    return function(...args) {
-        const now = (new Date).getTime();
-        if (now - lastCall < delay) {
-            return;
-        }
-        lastCall = now;
-        return fn(...args);
-    }
+function throttle(fn, minDelay, scope) {
+	var lastCall = 0;
+	return function() {
+		var now = +new Date();
+		if (now - lastCall < minDelay) {
+			return;
+		}
+		lastCall = now;
+		fn.apply(scope, arguments);
+	};
 }
 
 function calcHypotenuse(a, b) {
@@ -252,7 +296,7 @@ var Noise = function(args) {
 	this.x = Math.random() * maxWidth;
 	this.y = Math.random() * maxHeight;
 	this.xStop = halfWidth;
-	this.yStop = maxHeight + peopleSize;
+	this.yStop = 0 - peopleSize;
 	//this.yStop = halfHeight; // Happy accident
 	
 	this.xMove = (Math.random() * 6) - 3;
@@ -344,34 +388,10 @@ IS.create({
 		user = new userCharacter();
 
 		// Grid 'AFTER'
-		for(var i = peopleSize; i < maxWidth; i+= socialDistancing) {
-			var _counter = 0;
-
-			for(var j = peopleSize; j < maxHeight; j+= socialDistancing * 0.5) {
-				var _odd = _counter % 2;
-				var _x;
-				var _y = j;
-
-				(_odd == 0) ? _x = i : _x = i + (socialDistancing / 2);
-
-				var _chance = Math.random()*10;
-				if (_chance) {
-					var _person = new Particle({
-						xStop: _x,
-						yStop: _y
-					});
-					lovedPeople.push(_person);
-				}
-
-				_counter++;
-			}
-		}
+		setupLovedPeople();
 
 		// Passing by 'BEFORE'
-		for(var i = 0; i < crowd; i++) {
-			var _person = new Noise();
-			randomPeople.push(_person)
-		}
+		setupRandomPeople();
 	},
 
 	onChangeState: (state) => {
