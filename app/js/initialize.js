@@ -14,7 +14,7 @@ var toggleButton = document.getElementById('toggle');
 // a.k.a. "Social Rules"
 var lovedPeople = [];
 var randomPeople = [];
-var crowd = 50; // Amount of random people
+var crowd = 80; // Amount of random people
 var user, socialDistancing, minDistance, pullRange, peopleRadius, peopleSize, mobileFlag;
 var yStartOffsetPercentage = 2.14;
 
@@ -387,11 +387,9 @@ IS.create({
 		// Create User cursor
 		user = new userCharacter();
 
-		// Grid 'AFTER'
-		setupLovedPeople();
-
 		// Passing by 'BEFORE'
-		setupRandomPeople();
+		// Grid 'AFTER'
+		rebootCharacters();
 	},
 
 	onChangeState: (state) => {
