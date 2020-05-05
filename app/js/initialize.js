@@ -320,13 +320,13 @@ var Noise = function(args) {
 			if(this.x > maxWidth + peopleSize ) {
 				this.x = -peopleRadius;
 			} else if(this.x < -peopleSize ) {
-				this.x = maxWidth ;
+				this.x = maxWidth + peopleRadius;
 			}
 			
 			if(this.y > maxHeight + peopleSize ) {
 				this.y = -peopleRadius;
 			} else if(this.y < -peopleSize ) {
-				this.y = maxHeight ;
+				this.y = maxHeight + peopleRadius;
 			}
 		}
 		
